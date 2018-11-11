@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test">
+    <select id="findUserById" parameterType="int" resultType="com.wj.mybits.po.User">
+        SELECT * FROM user WHERE uid = #{uid}
+    </select>
+
+    <select id="findUserByUserName" parameterType="java.lang.String" resultType="com.wj.mybits.po.User">
+        SELECT * FROM user where uname like '%${value}%'
+    </select>
+
+    <insert id="insertUser" parameterType="com.wj.mybits.po.User">
+      <selectKey keyProperty="uid" order="AFTER" resultType="java.lang.Integer">
+          SELECT LAST_INSERT_ID()
+      </selectKey>
+        INSERT INTO user(uid,uname,gender,phone,address,email) VALUES(#{uName},#{gender},#{phone},#{address},#{email})
+    </insert>
+
+    <delete id="deleteUserById" parameterType="java.lang.Integer">
+        DELETE FROM user WHERE uid = #{uid}
+    </delete>
+
+    <update id="updateUserById" parameterType="com.wj.mybits.po.User">
+        UPDATE user SET uname=#{uName},gender=#{gender},phone=#{phone},address=#{address},email=#{email}
+        WHERE uid=#{uid}
+    </update>
+</mapper>
